@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAMN CTF Replayer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <span class="app-title">RAMN CTF Replayer</span>
+      <nav class="tab-nav">
+        <button class="tab-btn" data-tab="portal">CTF Challenges</button>
+        <button class="tab-btn" data-tab="reset">Reset RAMN Board</button>
+        <a href="https://github.com/leaukojo/ramn-ctf-replayer" target="_blank" rel="noopener" class="tab-btn source-btn">View source ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- CTF Challenge Portal -->
+    <div id="tab-portal" class="tab-content hidden">
+      <div class="portal-layout">
+        <aside class="event-sidebar" id="event-sidebar">
+          <!-- rendered by portal.js -->
+        </aside>
+        <section class="event-detail" id="event-detail">
+          <p class="placeholder">Select an event from the sidebar.</p>
+        </section>
+      </div>
+    </div>
+
+    <!-- Board Reset Tool -->
+    <div id="tab-reset" class="tab-content hidden">
+      <div class="reset-panel">
+        <h2>Reset RAMN Board to DFU Mode</h2>
+        <p>
+          Use this tool to put ECU A into DFU (Device Firmware Upgrade) mode so you can
+          reflash standard firmware with <strong>ramn-flasher</strong>.
+        </p>
+        <p>
+          This will open a Web Serial connection and send the DFU command automatically.
+          If the board is running ESV CTF firmware, the <code>selfdestruct</code> command
+          will be used instead.
+        </p>
+        <button id="reset-btn" class="reset-btn">Connect &amp; Reset</button>
+        <div id="serial-log" class="serial-log" aria-live="polite"></div>
+        <div id="reset-result"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    Unofficial tool, not affiliated with the RAMN team. Based on publicly available data from the
+    <a href="https://github.com/ToyotaInfoTech/RAMN" target="_blank" rel="noopener">RAMN repository</a>
+    and <a href="https://ramn.readthedocs.io/en/latest/ctf_writeups.html" target="_blank" rel="noopener">official write-ups</a>.
+    Use at your own risk. Created with Claude Sonnet 4.6.
+  </footer>
+
+  <script src="vendor/marked.min.js"></script>
+  <script type="module">
+    // Mermaid renders the ```mermaid diagram blocks in challenge write-ups.
+    // Loaded as an ES module; portal.js listens for `mermaid-ready` to redraw.
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    window.mermaid = mermaid;
+    window.dispatchEvent(new CustomEvent('mermaid-ready'));
+  </script>
+  <script src="js/data.js"></script>
+  <script src="js/portal.js"></script>
+  <script src="js/serial.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
